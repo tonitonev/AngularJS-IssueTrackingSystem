@@ -1,7 +1,7 @@
-angular.module('socialNetwork.home', [
-        'socialNetwork.users.authentication'
+angular.module('issueTracker.home', [
+        'issueTracker.users.authentication'
     ])
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl'
@@ -9,21 +9,19 @@ angular.module('socialNetwork.home', [
     }])
     .controller('HomeCtrl', [
         '$scope',
-        '$location',
         'authentication',
-        function($scope, $location, authentication) {
+        function ($scope,authentication) {
             $scope.login = function (user) {
-                authentication.loginUser(user)
-                    .then(function(loggedInUser){
-                        console.log(loggedInUser);
-                        $location.path('/newsFeed');                        
-                    });
+                //console.log(user);
+                authentication.loginUser(user);
             };
-            
+
             $scope.register = function (user) {
+                //console.log(user);
                 authentication.registerUser(user)
-                    .then(function(registeredUser) {
+                    .then(function(registeredUser){
                         console.log(registeredUser);
                     });
-            };
-        }]);
+            }
+        }
+    ]);
