@@ -9,18 +9,23 @@ angular.module('issueTracker.home', [
     }])
     .controller('HomeCtrl', [
         '$scope',
+        '$location',
         'authentication',
-        function ($scope,authentication) {
+        function ($scope, $location, authentication) {
             $scope.login = function (user) {
-                console.log(user);
-                authentication.loginUser(user);
+                authentication.loginUser(user)
+                    .then(function (loggedInUser) {
+                        //console.log(loggedInUser);
+                        $location.path('/dashboard'); //redirects to dashboard
+                    });
             };
 
             $scope.register = function (user) {
-                console.log(user);
+                //console.log(user);
                 authentication.registerUser(user)
-                    .then(function(registeredUser){
-                        console.log(registeredUser);
+                    .then(function (registeredUser) {
+                        //console.log(registeredUser);
+                        $location.path('/dashboard'); //redirects to dashboard
                     });
             }
         }

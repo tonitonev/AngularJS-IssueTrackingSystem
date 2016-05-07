@@ -1,22 +1,14 @@
-angular.module('socialNetwork.users.identity', [])
+angular.module('issueTracker.users.identity', [])
     .factory('identity', [
         '$http',
         '$q',
         'BASE_URL',
-        function($http, $q, BASE_URL) {
-        
-            var deferred = $q.defer();
-        
-            var currentUser = undefined;
-        
+        function ($http, $q, BASE_URL) {
 
-            
-            $http.get(BASE_URL + 'Users/me')
-                .then(function(response) {
-                    currentUser = response.data;
-                    deferred.resolve(currentUser);
-                });
-            
+            var deferred = $q.defer();
+
+            var currentUser = undefined;
+
             return {
                 getCurrentUser: function () {
                     if (currentUser) {
@@ -26,8 +18,22 @@ angular.module('socialNetwork.users.identity', [])
                         return deferred.promise;
                     }
                 },
-                isAuthenticated: function () {
-                    return true;
+                removeUserProfile: function () {
+                    currentUser = undefined;
+                },
+                requestUserProfile: function () {
+                    var userProfileDeferred = $q.defer();
+
+                    $http.get(BASE_URL + 'Users/me')
+                        .then(function (response) {
+                            currentUser = response.data;
+                            deferred.resolve(currentUser);
+                            userProfileDeferred.resolve();
+                        });
+
+                    return userProfileDeferred.promise;
+
                 }
             };
-    }]);
+
+        }]);
