@@ -1,5 +1,5 @@
 angular.module('issueTracker.users.authentication', [])
-    //factory-ито е сървис
+    //this factory is a service
     .factory('authentication', [
         '$http',
         '$q',
@@ -22,8 +22,10 @@ angular.module('issueTracker.users.authentication', [])
 
             function loginUser(user) {
                 var deferred = $q.defer();
+                user.grant_type = 'password';
+                console.log(user);
 
-                $http.post(BASE_URL + 'Users/Login', user)
+                $http.post(BASE_URL + 'api/Token', user)
                     .then(function (response) {
                         console.log(response.data);
                         deferred.resolve(response.data);
