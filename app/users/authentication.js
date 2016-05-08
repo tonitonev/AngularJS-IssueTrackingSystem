@@ -38,12 +38,12 @@ angular.module('issueTracker.users.authentication', [])
 
             function loginUser(user) {
                 var deferred = $q.defer();
-                user.grant_type = 'password';
-                console.log(user);
+                //user.grant_type = 'password';
+                //console.log(user);
 
-                $http.post(BASE_URL + 'api/Token', user)
+                $http.post(BASE_URL + 'api/Token',  'Username=' + user.username + '&Password=' + user.password + '&grant_type=password')
                     .then(function (response) {
-                        console.log(response.data);
+                        //console.log(response.data);
                         preserveUserData(response.data);
 
                         identity.requestUserProfile()
